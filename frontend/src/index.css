@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+html, body, #root {
+height: 100%;
+}
+
+
+/* optional small helper for overlay */
+.bg-overlay {
+background: rgba(0,0,0,0.6);
+}
