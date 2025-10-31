@@ -4,37 +4,42 @@ const cors = require("cors");
 const app = express();
 const PORT = 4000;
 
-// Step 1: Allow frontend domains here
+// Allowed domains (Vercel + Local)
 const allowedOrigins = [
-  "https://netflix-login-page-blond.vercel.app", // your Vercel frontend URL
-  "http://localhost:5173", // for local development
+  "https://netflix-login-page-blond.vercel.app", // your Vercel frontend
+  "http://localhost:5173",
 ];
 
-// Step 2: Configure CORS properly
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
+// CORS Middleware (explicit headers)
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.header("Access-Control-Allow-Origin", origin);
+  }
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Authorization, X-Requested-With"
+  );
+  res.header("Access-Control-Allow-Credentials", "true");
+
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+
+  next();
+});
 
 app.use(express.json());
 
-// Dummy user data
+// Dummy user
 const MOCK_USER = {
   email: "user@example.com",
   password: "password123",
   name: "Demo User",
 };
 
-//  Login Route
+// Login route
 app.post("/api/login", (req, res) => {
   const { email, password } = req.body;
 
@@ -61,7 +66,7 @@ app.post("/api/login", (req, res) => {
   }, 1000);
 });
 
-//  Token Verify Route
+// Verify route
 app.get("/api/verify", (req, res) => {
   const token = req.headers.authorization?.split(" ")[1];
   if (token === "mock-jwt-token") {
@@ -70,7 +75,7 @@ app.get("/api/verify", (req, res) => {
   return res.status(403).json({ success: false, message: "Invalid token" });
 });
 
-//  Start server
+// Start server
 app.listen(PORT, () =>
-  console.log(`Auth server running on http://localhost:${PORT}`)
+  console.log(` Auth server running on http://localhost:${PORT}`)
 );
