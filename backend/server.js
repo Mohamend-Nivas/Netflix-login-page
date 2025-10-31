@@ -4,13 +4,13 @@ const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-// Allowed origins (update with your actual URLs)
+// Add your actual Vercel project URL here
 const allowedOrigins = [
-  "https://netflix-login-page-beta.vercel.app", // your current Vercel frontend
-  "http://localhost:5173", // local dev
+  "https://netflix-login-page-lg169z47n-mohamed-nivas-projects.vercel.app", // your live Vercel frontend
+  "http://localhost:5173", // for local development
 ];
 
-// Proper CORS configuration
+// Proper CORS setup
 app.use(
   cors({
     origin: function (origin, callback) {
@@ -29,7 +29,7 @@ app.use(
 
 app.use(express.json());
 
-// Dummy user data
+// Dummy user for testing
 const MOCK_USER = {
   email: "user@example.com",
   password: "password123",
@@ -39,13 +39,13 @@ const MOCK_USER = {
 // Login route
 app.post("/api/login", (req, res) => {
   const { email, password } = req.body;
-
-  console.log(" Login attempt:", email);
+  console.log("Login attempt:", email);
 
   if (!email || !password) {
-    return res
-      .status(400)
-      .json({ success: false, message: "Email and password required" });
+    return res.status(400).json({
+      success: false,
+      message: "Email and password required",
+    });
   }
 
   setTimeout(() => {
@@ -56,14 +56,14 @@ app.post("/api/login", (req, res) => {
         user: { name: MOCK_USER.name, email: MOCK_USER.email },
       });
     }
-
-    return res
-      .status(401)
-      .json({ success: false, message: "Invalid email or password" });
+    return res.status(401).json({
+      success: false,
+      message: "Invalid email or password",
+    });
   }, 1000);
 });
 
-// Token verification route
+// 🔹 Token verification route
 app.get("/api/verify", (req, res) => {
   const token = req.headers.authorization?.split(" ")[1];
   if (token === "mock-jwt-token") {
@@ -72,10 +72,10 @@ app.get("/api/verify", (req, res) => {
   return res.status(403).json({ success: false, message: "Invalid token" });
 });
 
-// Root route for testing
+// 🔹 Root test route
 app.get("/", (req, res) => {
-  res.send(" Netflix Login Backend is running successfully!");
+  res.send("Netflix Login Backend is running successfully!");
 });
 
-// Start server
-app.listen(PORT, () => console.log(` Auth server running on port ${PORT}`));
+// 🔹 Start the server
+app.listen(PORT, () => console.log(`Auth server running on port ${PORT}`));
