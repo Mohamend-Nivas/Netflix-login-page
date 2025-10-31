@@ -4,19 +4,20 @@ const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-// Allowed origins
+// Allowed origins (update with your actual URLs)
 const allowedOrigins = [
-  "https://netflix-login-page-blond.vercel.app", // your Vercel frontend
-  "http://localhost:5173",
+  "https://netflix-login-page-beta.vercel.app", // your current Vercel frontend
+  "http://localhost:5173", // local dev
 ];
 
-// CORS setup (no app.options needed!)
+// Proper CORS configuration
 app.use(
   cors({
     origin: function (origin, callback) {
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
+        console.warn("❌ Blocked by CORS:", origin);
         callback(new Error("Not allowed by CORS"));
       }
     },
@@ -28,7 +29,7 @@ app.use(
 
 app.use(express.json());
 
-// Dummy user
+// Dummy user data
 const MOCK_USER = {
   email: "user@example.com",
   password: "password123",
@@ -39,7 +40,7 @@ const MOCK_USER = {
 app.post("/api/login", (req, res) => {
   const { email, password } = req.body;
 
-  console.log("Login attempt:", email);
+  console.log(" Login attempt:", email);
 
   if (!email || !password) {
     return res
@@ -69,6 +70,11 @@ app.get("/api/verify", (req, res) => {
     return res.json({ success: true, message: "Token valid" });
   }
   return res.status(403).json({ success: false, message: "Invalid token" });
+});
+
+// Root route for testing
+app.get("/", (req, res) => {
+  res.send(" Netflix Login Backend is running successfully!");
 });
 
 // Start server
