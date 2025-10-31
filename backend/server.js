@@ -4,13 +4,13 @@ const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-// Allowed origins (Vercel + Local)
+// Allowed origins
 const allowedOrigins = [
   "https://netflix-login-page-blond.vercel.app", // your Vercel frontend
   "http://localhost:5173",
 ];
 
-// Proper CORS middleware
+// CORS setup (no app.options needed!)
 app.use(
   cors({
     origin: function (origin, callback) {
@@ -25,9 +25,6 @@ app.use(
     credentials: true,
   })
 );
-
-// Handle preflight requests
-app.options("/*", cors());
 
 app.use(express.json());
 
@@ -75,4 +72,4 @@ app.get("/api/verify", (req, res) => {
 });
 
 // Start server
-app.listen(PORT, () => console.log(`✅ Auth server running on port ${PORT}`));
+app.listen(PORT, () => console.log(` Auth server running on port ${PORT}`));
