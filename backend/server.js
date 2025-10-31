@@ -27,7 +27,7 @@ app.use(
 );
 
 // Handle preflight requests
-app.options("*", cors());
+app.options("/*", cors());
 
 app.use(express.json());
 
@@ -75,6 +75,4 @@ app.get("/api/verify", (req, res) => {
 });
 
 // Start server
-app.listen(PORT, () =>
-  console.log(` Auth server running on port ${PORT}`)
-);
+app.listen(PORT, () => console.log(`✅ Auth server running on port ${PORT}`));
