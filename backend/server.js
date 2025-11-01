@@ -13,7 +13,9 @@ const MOCK_USER = {
   name: "Demo User",
 };
 
-app.post("/api/login", (req, res) => {
+const router = express.Router();
+
+router.post("/login", (req, res) => {
   const { email, password } = req.body;
 
   console.log("Login attempt:", email);
@@ -32,6 +34,8 @@ app.post("/api/login", (req, res) => {
         user: { name: MOCK_USER.name, email: MOCK_USER.email },
       });
     }
+
+    app.use("/api/v1", router);
 
     return res
       .status(401)
