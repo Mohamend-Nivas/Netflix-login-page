@@ -35,7 +35,6 @@ router.post("/login", (req, res) => {
       });
     }
 
-    app.use("/api/v1", router);
 
     return res
       .status(401)
@@ -43,7 +42,8 @@ router.post("/login", (req, res) => {
   }, 1000);
 });
 
-app.get("/api/verify", (req, res) => {
+
+router.get("/verify", (req, res) => {
   const token = req.headers.authorization?.split(" ")[1];
   if (token === "mock-jwt-token") {
     return res.json({ success: true, message: "Token valid" });
@@ -51,6 +51,7 @@ app.get("/api/verify", (req, res) => {
   return res.status(403).json({ success: false, message: "Invalid token" });
 });
 
+app.use("/api", router);
 // app.listen(PORT, () =>
 //   console.log(`Auth server running on http://localhost:${PORT}`)
 // );
