@@ -66,12 +66,12 @@ export default function Login() {
       {/* Overlay (desktop) */}
       <div className="absolute inset-0 bg-black bg-opacity-60 hidden sm:block"></div>
 
-      {/* Netflix Logo (desktop + always visible fix) */}
-      <div className="absolute top-6 left-6 sm:left-12 z-20">
+      {/* Netflix Logo (desktop) */}
+      <div className="hidden sm:block absolute top-6 left-6 sm:left-12 z-20">
         <img
           src="/Netflix_2015_logo.svg"
           alt="Netflix Logo"
-          className="w-32 sm:w-44 drop-shadow-[2px_2px_6px_rgba(0,0,0,0.6)]"
+          className="w-36 sm:w-44 drop-shadow-[2px_2px_6px_rgba(0,0,0,0.6)]"
         />
       </div>
 
@@ -87,12 +87,12 @@ export default function Login() {
           py-12 px-8 sm:px-16
         "
       >
-        {/* Mobile logo (for smaller screens only) */}
+        {/* Netflix Logo (mobile) */}
         <div className="block sm:hidden w-full text-center mb-6">
           <img
             src="/Netflix_2015_logo.svg"
             alt="Netflix Logo"
-            className="w-28 mx-auto mb-10"
+            className="w-28 mx-auto mb-14"
           />
         </div>
 
