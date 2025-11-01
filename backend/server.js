@@ -47,6 +47,8 @@ app.get("/api/verify", (req, res) => {
   return res.status(403).json({ success: false, message: "Invalid token" });
 });
 
-app.listen(PORT, () =>
-  console.log(`Auth server running on http://localhost:${PORT}`)
-);
+// app.listen(PORT, () =>
+//   console.log(`Auth server running on http://localhost:${PORT}`)
+// );
+
+module.exports = app;
