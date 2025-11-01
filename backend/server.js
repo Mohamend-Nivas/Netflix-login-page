@@ -13,9 +13,7 @@ const MOCK_USER = {
   name: "Demo User",
 };
 
-const router = express.Router();
-
-router.post("/login", (req, res) => {
+app.post("/api/login", (req, res) => {
   const { email, password } = req.body;
 
   console.log("Login attempt:", email);
@@ -35,15 +33,13 @@ router.post("/login", (req, res) => {
       });
     }
 
-
     return res
       .status(401)
       .json({ success: false, message: "Invalid email or password" });
   }, 1000);
 });
 
-
-router.get("/verify", (req, res) => {
+app.get("/api/verify", (req, res) => {
   const token = req.headers.authorization?.split(" ")[1];
   if (token === "mock-jwt-token") {
     return res.json({ success: true, message: "Token valid" });
@@ -51,9 +47,6 @@ router.get("/verify", (req, res) => {
   return res.status(403).json({ success: false, message: "Invalid token" });
 });
 
-app.use("/api", router);
-// app.listen(PORT, () =>
-//   console.log(`Auth server running on http://localhost:${PORT}`)
-// );
-
-module.exports = app;
+app.listen(PORT, () =>
+  console.log(` Auth server running on http://localhost:${PORT}`)
+);
