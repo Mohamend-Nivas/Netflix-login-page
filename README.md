@@ -46,10 +46,12 @@ These credentials are handled by a mock backend and will simulate a successful l
 
 ## Project Structure
 
-root/ ├── backend/
+root/
+├── backend/
 │ ├── server.js
 │ ├── package.json
-│ └── ... ├── frontend/
+│ └── ...
+├── frontend/
 │ ├── src/
 │ │ ├── assets/
 │ │ ├── components/
