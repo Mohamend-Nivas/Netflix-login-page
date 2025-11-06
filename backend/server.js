@@ -4,7 +4,12 @@ const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://your-frontend.vercel.app", // Vercel frontend URL
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 const MOCK_USER = {
