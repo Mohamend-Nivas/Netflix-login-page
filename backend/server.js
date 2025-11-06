@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 4000;
 
 app.use(
   cors({
-    origin: "https://your-frontend.vercel.app", // Vercel frontend URL
+    origin: "https://netflix-login-page-theta.vercel.app/", // Vercel frontend URL
     credentials: true,
   })
 );
