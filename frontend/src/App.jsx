@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 
 function ProtectedRoute({ children }) {
@@ -13,11 +14,8 @@ function ProtectedRoute({ children }) {
 export default function App() {
   return (
     <Routes>
-      {/* Login Page */}
       <Route path="/" element={<Login />} />
-
-
-      {/* Dashboard Protected Route */}
+      <Route path="/signup" element={<Signup />} />
       <Route
         path="/dashboard"
         element={
@@ -26,8 +24,6 @@ export default function App() {
           </ProtectedRoute>
         }
       />
-
-      {/* Any unknown path -> redirect to Login */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
