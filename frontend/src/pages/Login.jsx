@@ -158,18 +158,6 @@ export default function Login() {
           Use a sign-in code
         </button>
 
-        <div className="text-center mt-4">
-          <p className="text-gray-400 text-sm">
-            New to Netflix?{" "}
-            <a
-              href="/signup"
-              className="text-blue-400 underline hover:text-blue-300"
-            >
-              Sign up now
-            </a>
-          </p>
-        </div>
-
         {/* Forgot Password + Remember Me */}
         <div className="flex justify-between items-center text-sm text-gray-400 mt-4">
           <a

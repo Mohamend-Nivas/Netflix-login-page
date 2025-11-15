@@ -7,18 +7,23 @@ const PORT = process.env.PORT || 4000;
 app.use(
   cors({
     origin: [
-      "http://localhost:5173", //  Local frontend
-      "https://netflix-login-page-theta.vercel.app", // Deployed frontend
-    ],
+      "http://localhost:3000", // Local frontend URL
+      "https://netflix-login-page-theta.vercel.app"], // Vercel frontend URL
     credentials: true,
   })
 );
 app.use(express.json());
 
-const users = []; // In-memory user store
+const MOCK_USER = {
+  email: "user@example.com",
+  password: "password123",
+  name: "Demo User",
+};
 
-app.post("/api/signup", (req, res) => {
+app.post("/api/login", (req, res) => {
   const { email, password } = req.body;
+
+  console.log("Login attempt:", email);
 
   if (!email || !password) {
     return res
@@ -26,32 +31,19 @@ app.post("/api/signup", (req, res) => {
       .json({ success: false, message: "Email and password required" });
   }
 
-  const existingUser = users.find((u) => u.email === email);
-  if (existingUser) {
-    return res
-      .status(409)
-      .json({ success: false, message: "User already exists" });
-  }
+  setTimeout(() => {
+    if (email === MOCK_USER.email && password === MOCK_USER.password) {
+      return res.json({
+        success: true,
+        token: "mock-jwt-token",
+        user: { name: MOCK_USER.name, email: MOCK_USER.email },
+      });
+    }
 
-  users.push({ email, password });
-  return res.json({ success: true, message: "Signup successful" });
-});
-
-app.post("/api/login", (req, res) => {
-  const { email, password } = req.body;
-
-  const user = users.find((u) => u.email === email && u.password === password);
-  if (!user) {
     return res
       .status(401)
       .json({ success: false, message: "Invalid email or password" });
-  }
-
-  return res.json({
-    success: true,
-    token: "mock-jwt-token",
-    user: { email: user.email },
-  });
+  }, 1000);
 });
 
 app.get("/api/verify", (req, res) => {
@@ -63,5 +55,5 @@ app.get("/api/verify", (req, res) => {
 });
 
 app.listen(PORT, () =>
-  console.log(`Auth server running on http://localhost:${PORT}`)
+  console.log(` Auth server running on http://localhost:${PORT}`)
 );
